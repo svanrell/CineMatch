@@ -6,9 +6,9 @@
 
 ![Status](https://img.shields.io/badge/status-early%20development-orange)
 ![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1-6DB33F?logo=springboot&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-stable-000000?logo=rust&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-TypeScript-000000?logo=nextdotjs&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.x-6DB33F?logo=springboot&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-1.100%20(2024)-000000?logo=rust&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-16.x-000000?logo=nextdotjs&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)
 
 </div>
@@ -118,14 +118,15 @@ Versiones fijadas para todo el equipo. Cualquier cambio de versión se acuerda a
 
 **Plataforma**
 
-| Herramienta | Versión | Notas |
+| Herramienta | Versión | Por qué / Justificación |
 |---|---|---|
-| Java (JDK) | **25** (LTS) | Obligatoria. Recomendado Eclipse Temurin. |
-| Spring Boot | **4.1.x** | Incluye Spring Framework 7, Spring Security 7, Hibernate 7 y Jackson 3. |
-| Rust | **1.100** (stable), edición **2024** | Fijado con `rust-toolchain.toml`. |
-| Node.js | **24** (LTS) | |
-| PostgreSQL | **18** | Imagen Docker `postgres:18`. |
-| Python | **3.13** | Solo para `ml/`. |
+| Java | **25** (LTS) | Es obligatoria, y además es LTS (soporte largo). Recomendado Eclipse Temurin. |
+| Spring Boot | **4.1.x** (ahora 4.1.2) | Es la estable actual y funciona con Java 25. La 4.0 deja de recibir soporte el 31/12/2026, así que no merece la pena. La 4.2 todavía está en release candidate (versión de prueba). Incluye Spring Framework 7, Spring Security 7, Hibernate 7 y Jackson 3. |
+| Rust | **1.100**, edición **2024** | Es la estable actual. Se fija con `rust-toolchain.toml` para que todos compiléis con la misma. |
+| Node.js | **24** LTS | Es una LTS madura y Next 16 la soporta sin problemas. La 26 acaba de pasar a LTS y también valdría. |
+| PostgreSQL | **18** | Es la última versión estable (imagen Docker `postgres:18`). |
+| Next.js / React | **16.x** / **19.x** | Son las últimas estables. |
+| Python | **3.13** | Solo para entrenar los modelos de recomendación (`ml/`). |
 | Build backend | Gradle **9.x** o Maven | Pendiente de decidir. |
 
 **Backend (Spring Boot)**
@@ -257,8 +258,10 @@ sequenceDiagram
 
 - Docker y Docker Compose
 - Java 25 (obligatorio)
-- Rust stable ([rustup](https://rustup.rs))
+- Rust 1.100 (edición 2024 vía [rustup](https://rustup.rs))
 - Node.js 24 LTS
+- PostgreSQL 18
+- Python 3.13 (para módulo `ml/`)
 - `ffmpeg`
 
 ### Ejecución
