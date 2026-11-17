@@ -6,10 +6,10 @@
 
 ![Status](https://img.shields.io/badge/status-early%20development-orange)
 ![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?logo=springboot&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1-6DB33F?logo=springboot&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-stable-000000?logo=rust&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-TypeScript-000000?logo=nextdotjs&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)
 
 </div>
 
@@ -24,6 +24,7 @@
 2. [Funcionalidades](#funcionalidades)
 3. [Arquitectura](#arquitectura)
 4. [Stack tecnológico](#stack-tecnológico)
+   - [Versiones](#versiones)
 5. [Estructura del repositorio](#estructura-del-repositorio)
 6. [Servicios](#servicios)
 7. [Pipeline de vídeo](#pipeline-de-vídeo)
@@ -102,7 +103,7 @@ flowchart LR
 | Capa | Tecnología | Responsabilidad |
 |---|---|---|
 | Frontend | Next.js, TypeScript | Interfaz de usuario, SSR, reproductor |
-| API principal | Java 25, Spring Boot 3 | Dominio, autenticación, persistencia |
+| API principal | Java 25, Spring Boot 4.1 | Dominio, autenticación, persistencia |
 | Servicios de rendimiento | Rust, `axum`, `tokio` | Búsqueda y recomendaciones |
 | Base de datos | PostgreSQL | Persistencia transaccional |
 | Procesamiento de vídeo | `ffmpeg` | Transcodificación y empaquetado HLS |
@@ -110,6 +111,51 @@ flowchart LR
 | Reproductor | `hls.js` / Video.js | Reproducción adaptativa |
 | Machine learning | Python | Entrenamiento offline de modelos de recomendación |
 | Infraestructura local | Docker Compose | Orquestación del entorno de desarrollo |
+
+### Versiones
+
+Versiones fijadas para todo el equipo. Cualquier cambio de versión se acuerda antes y se refleja en esta tabla.
+
+**Plataforma**
+
+| Herramienta | Versión | Notas |
+|---|---|---|
+| Java (JDK) | **25** (LTS) | Obligatoria. Recomendado Eclipse Temurin. |
+| Spring Boot | **4.1.x** | Incluye Spring Framework 7, Spring Security 7, Hibernate 7 y Jackson 3. |
+| Rust | **1.100** (stable), edición **2024** | Fijado con `rust-toolchain.toml`. |
+| Node.js | **24** (LTS) | |
+| PostgreSQL | **18** | Imagen Docker `postgres:18`. |
+| Python | **3.13** | Solo para `ml/`. |
+| Build backend | Gradle **9.x** o Maven | Pendiente de decidir. |
+
+**Backend (Spring Boot)**
+
+Las versiones de estas dependencias las gestiona Spring Boot, así que no se fijan a mano:
+
+`spring-boot-starter-web` · `spring-boot-starter-data-jpa` · `spring-boot-starter-security` · `spring-boot-starter-oauth2-resource-server` (JWT) · `spring-boot-starter-validation` · `flyway-core` + `flyway-database-postgresql` · `postgresql` (driver) · `spring-boot-testcontainers`
+
+**Search Service (Rust)**
+
+| Crate | Versión |
+|---|---|
+| `tokio` | 1.x |
+| `axum` | 0.8 |
+| `tantivy` | 0.27 |
+| `sqlx` | 0.9 (features `postgres`, `runtime-tokio`) |
+| `serde` / `serde_json` | 1.x |
+| `moka` | 0.12 |
+| `tracing` / `tracing-subscriber` | 0.1 / 0.3 |
+| `usearch` | 2.x (solo si hace falta búsqueda vectorial aproximada) |
+
+**Frontend**
+
+| Paquete | Versión |
+|---|---|
+| `next` | 16.x (App Router) |
+| `react` / `react-dom` | 19.x |
+| `typescript` | La que instale `create-next-app` |
+| `hls.js` | 1.x |
+| `tailwindcss` | 4.x (opcional) |
 
 ## Estructura del repositorio
 
@@ -210,9 +256,9 @@ sequenceDiagram
 ### Requisitos
 
 - Docker y Docker Compose
-- Java 25
+- Java 25 (obligatorio)
 - Rust stable ([rustup](https://rustup.rs))
-- Node.js 20 LTS
+- Node.js 24 LTS
 - `ffmpeg`
 
 ### Ejecución
