@@ -5,7 +5,7 @@
 **Plataforma de vídeo bajo demanda con arquitectura de servicios: Spring Boot, Rust y Next.js.**
 
 ![Status](https://img.shields.io/badge/status-early%20development-orange)
-![Java](https://img.shields.io/badge/Java-21-007396?logo=openjdk&logoColor=white)
+![Java](https://img.shields.io/badge/Java-25-007396?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?logo=springboot&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-stable-000000?logo=rust&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-TypeScript-000000?logo=nextdotjs&logoColor=white)
@@ -102,7 +102,7 @@ flowchart LR
 | Capa | Tecnología | Responsabilidad |
 |---|---|---|
 | Frontend | Next.js, TypeScript | Interfaz de usuario, SSR, reproductor |
-| API principal | Java 21, Spring Boot 3 | Dominio, autenticación, persistencia |
+| API principal | Java 25, Spring Boot 3 | Dominio, autenticación, persistencia |
 | Servicios de rendimiento | Rust, `axum`, `tokio` | Búsqueda y recomendaciones |
 | Base de datos | PostgreSQL | Persistencia transaccional |
 | Procesamiento de vídeo | `ffmpeg` | Transcodificación y empaquetado HLS |
@@ -210,7 +210,7 @@ sequenceDiagram
 ### Requisitos
 
 - Docker y Docker Compose
-- Java 21
+- Java 25
 - Rust stable ([rustup](https://rustup.rs))
 - Node.js 20 LTS
 - `ffmpeg`
