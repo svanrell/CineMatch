@@ -9,6 +9,7 @@
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.x-6DB33F?logo=springboot&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-1.100%20(2024)-000000?logo=rust&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16.x-000000?logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white)
 
 </div>
@@ -102,8 +103,8 @@ flowchart LR
 
 | Capa | Tecnología | Responsabilidad |
 |---|---|---|
-| Frontend | Next.js, TypeScript | Interfaz de usuario, SSR, reproductor |
-| API principal | Java 25, Spring Boot 4.1 | Dominio, autenticación, persistencia |
+| Frontend | Next.js 16.x, React 19.x, TypeScript | Interfaz de usuario, SSR, reproductor |
+| API principal | Java 25, Spring Boot 4.1.x (4.1.2) | Dominio, autenticación, persistencia |
 | Servicios de rendimiento | Rust, `axum`, `tokio` | Búsqueda y recomendaciones |
 | Base de datos | PostgreSQL | Persistencia transaccional |
 | Procesamiento de vídeo | `ffmpeg` | Transcodificación y empaquetado HLS |
