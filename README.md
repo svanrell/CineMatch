@@ -128,13 +128,13 @@ Versiones fijadas para todo el equipo. Cualquier cambio de versión se acuerda a
 | PostgreSQL | **18** | Es la última versión estable (imagen Docker `postgres:18`). |
 | Next.js / React | **16.x** / **19.x** | Son las últimas estables. |
 | Python | **3.13** | Solo para entrenar los modelos de recomendación (`ml/`). |
-| Build backend | Gradle **9.x** o Maven | Pendiente de decidir. |
+| Build backend | Gradle **9.x** (Kotlin DSL) | Se usa el wrapper (`./gradlew`), así que no hace falta instalar Gradle. |
 
 **Backend (Spring Boot)**
 
 Las versiones de estas dependencias las gestiona Spring Boot, así que no se fijan a mano:
 
-`spring-boot-starter-web` · `spring-boot-starter-data-jpa` · `spring-boot-starter-security` · `spring-boot-starter-oauth2-resource-server` (JWT) · `spring-boot-starter-validation` · `flyway-core` + `flyway-database-postgresql` · `postgresql` (driver) · `spring-boot-testcontainers`
+`spring-boot-starter-webmvc` · `spring-boot-starter-data-jpa` · `spring-boot-starter-security` · `spring-boot-starter-oauth2-resource-server` (JWT) · `spring-boot-starter-validation` · `flyway-core` + `flyway-database-postgresql` · `postgresql` (driver) · `spring-boot-testcontainers`
 
 **Search Service (Rust)**
 
@@ -189,6 +189,40 @@ API principal y propietaria del dominio de negocio.
 - **Fachada interna:** expone búsqueda y recomendaciones al frontend delegando en el servicio Rust.
 
 **Dependencias previstas:** Spring Web, Spring Data JPA, Spring Security, Bean Validation y Flyway.
+
+#### Estructura del código
+
+El código se organiza **por funcionalidad**: cada dominio tiene su propio paquete con sus capas dentro (`Controller → Service → Repository`, más la entidad y sus DTOs).
+
+```text
+backend/src/main/java/com/cinematch/backend/
+├── BackendApplication.java      # Punto de entrada
+├── movie/                       # Catálogo de películas
+│   ├── Movie.java               # Entidad JPA
+│   ├── MovieController.java     # Endpoints REST
+│   ├── MovieService.java        # Lógica de negocio
+│   ├── MovieRepository.java     # Acceso a datos
+│   └── dto/                     # Objetos de petición y respuesta
+├── user/                        # Usuarios (misma estructura)
+├── rating/                      # Valoraciones (misma estructura)
+└── common/
+    ├── config/                  # Configuración transversal (seguridad, etc.)
+    └── exception/               # Manejo global de errores
+
+backend/src/main/resources/
+├── application.yaml             # Configuración de la aplicación
+└── db/migration/                # Migraciones SQL de Flyway
+```
+
+| Capa | Anotación | Responsabilidad |
+|---|---|---|
+| Controller | `@RestController` | Recibe peticiones HTTP y devuelve DTOs en JSON |
+| Service | `@Service` | Reglas de negocio; orquesta repositorios |
+| Repository | `extends JpaRepository` | Consultas a PostgreSQL |
+| Entity | `@Entity` | Representa una tabla |
+| DTO | `record` | Datos que entran y salen de la API, desacoplados de la entidad |
+
+Cada capa solo depende de la inmediatamente inferior. Todo el código debe estar dentro del paquete `com.cinematch.backend` para que `@SpringBootApplication` lo detecte.
 
 ### Search Service: Rust
 
@@ -353,7 +387,7 @@ Toda decisión técnica relevante se registra como ADR en `docs/adr/`, indicando
 Puntos pendientes de decisión por el equipo:
 
 - [ ] Pipeline de vídeo propio frente a servicio gestionado (Mux, Cloudflare Stream) para el MVP
-- [ ] Herramienta de build para el backend: Maven o Gradle
+- [x] Herramienta de build para el backend: Gradle (Kotlin DSL)
 - [ ] Proveedor de almacenamiento de objetos
 - [ ] Plataforma de despliegue
 - [ ] Asignación de responsables por servicio
